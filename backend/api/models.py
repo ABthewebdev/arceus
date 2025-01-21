@@ -17,7 +17,7 @@ class CustomUser(AbstractUser):
         return self.username
 
 class Post(models.Model):
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='posts')
     likes = models.BigIntegerField(default=0)
     comments = models.BigIntegerField(default=0)
     link = models.TextField(max_length=255, default=None)
