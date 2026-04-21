@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Food - FoodRescue{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-8">Add New Food</h1>
+
+<form method="post" class="max-w-lg">
+    {% csrf_token %}
+    <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Food Name</label>
+        <input type="text" name="name" required class="w-full border p-2 rounded">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Description</label>
+        <textarea name="description" rows="3" class="w-full border p-2 rounded"></textarea>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Quantity</label>
+            <input type="number" name="quantity" value="1" min="1" required class="w-full border p-2 rounded">
+        </div>
+        <div>
+            <label class="block text-gray-700 mb-2">Discounted Price ($)</label>
+            <input type="number" name="price" step="0.01" required class="w-full border p-2 rounded">
+        </div>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Original Price (optional)</label>
+        <input type="number" name="original_price" step="0.01" class="w-full border p-2 rounded">
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Pickup Start Time</label>
+            <input type="time" name="pickup_start" required class="w-full border p-2 rounded">
+        </div>
+        <div>
+            <label class="block text-gray-700 mb-2">Pickup End Time</label>
+            <input type="time" name="pickup_end" required class="w-full border p-2 rounded">
+        </div>
+    </div>
+    <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700">Add Food</button>
+</form>
+{% endblock %}
