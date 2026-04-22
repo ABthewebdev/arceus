@@ -26,11 +26,6 @@ ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', '').split(',
 
 SITE_ID = 1
 
-TAILWIND_SITE_HEADER = 'FoodRescue'
-TAILWIND_SITE_TITLE = 'FoodRescue'
-TAILWIND_SITE_TAGLINE = 'Connecting restaurants with surplus food to customers'
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'core',
-    'tailwind',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -58,7 +52,6 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'tailwind.middleware.TimezoneMiddleware',
 ]
 
 # Authentication settings
