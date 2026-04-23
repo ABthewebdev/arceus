@@ -25,13 +25,13 @@
                             <a href="{% url 'browse_food' %}" class="hover:bg-green-700 px-3 py-2 rounded">Browse Food</a>
                             <a href="{% url 'my_orders' %}" class="hover:bg-green-700 px-3 py-2 rounded">My Orders</a>
                         {% endif %}
-                        <form method="post" action="{% url 'account_logout' %}" class="inline">
+                        <form method="post" action="{% url 'logout' %}" class="inline">
                             {% csrf_token %}
                             <button type="submit" class="hover:bg-green-700 px-3 py-2 rounded">Logout</button>
                         </form>
                     {% else %}
-                        <a href="{% url 'account_login' %}" class="hover:bg-green-700 px-3 py-2 rounded">Login</a>
-                        <a href="{% url 'account_signup' %}" class="bg-white text-green-600 hover:bg-gray-100 px-3 py-2 rounded">Sign Up</a>
+                        <a href="{% url 'login' %}" class="hover:bg-green-700 px-3 py-2 rounded">Login</a>
+                        <a href="{% url 'register' %}" class="bg-white text-green-600 hover:bg-gray-100 px-3 py-2 rounded">Sign Up</a>
                     {% endif %}
                 </div>
             </div>

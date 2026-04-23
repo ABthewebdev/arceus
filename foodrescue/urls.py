@@ -1,6 +1,3 @@
-"""
-URL configuration for foodrescue project.
-"""
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -11,7 +8,7 @@ urlpatterns = [
     path('admin/', public_admin_site.urls),
     path('', include('core.urls')),
     path('accounts/', include('accounts.urls')),
-    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:
