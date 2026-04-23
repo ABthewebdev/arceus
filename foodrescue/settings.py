@@ -22,7 +22,17 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', '').split(',') if h.strip()]
+ALLOWED_HOSTS = [
+    'arceus-production.up.railway.app',
+    'www.arceus-production.up.railway.app',
+    'originscent.com',
+    'www.originscent.com',
+    'localhost',
+    '127.0.0.1',
+]
+_env_hosts = os.environ.get('ALLOWED_HOSTS', '')
+if _env_hosts:
+    ALLOWED_HOSTS.extend([h.strip() for h in _env_hosts.split(',') if h.strip()])
 
 SITE_ID = 1
 
@@ -146,6 +156,16 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://originscent.com',
+    'https://www.originscent.com',
+    'https://arceus-production.up.railway.app',
+    'https://www.arceus-production.up.railway.app',
+]
+_env_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
+if _env_origins:
+    CSRF_TRUSTED_ORIGINS.extend([o.strip() for o in _env_origins.split(',') if o.strip()])
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
