@@ -100,21 +100,21 @@ def order_food(request, pk):
 
 @require_http_methods(["GET"])
 def dropdown_menu(request):
-    """Return the dropdown menu items"""
-    return render(request, 'dropdown_items.html')
+    items = ['orders', 'rewards', 'menu']
+    return render(request, 'dropdown_items.html', {'items': items})
 
 
-def orders_view(request):
+def orders(request):
     """Handle Orders click"""
     return render(request, 'pages/orders.html')
 
 
-def rewards_view(request):
+def rewards(request):
     """Handle Rewards click"""
     return render(request, 'pages/rewards.html')
 
 
-def menu_view(request):
+def menu(request):
     """Handle Menu click"""
     return render(request, 'pages/menu.html')
 

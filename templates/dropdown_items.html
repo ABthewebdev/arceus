@@ -1,8 +1,8 @@
 {% for item in items %}
 <a class="dropdown-item" 
-   hx-get="{% url item.view_name %}" 
+   hx-get="{% url item %}" 
    hx-target="#content" 
    hx-swap="innerHTML swap:1s">
-    {{ item.name }}
+    {{ item }}
 </a>
 {% endfor %}
