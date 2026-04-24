@@ -28,9 +28,10 @@
                             <a href="{% url 'add_restaurant' %}" class="hover:bg-green-700 px-3 py-2 rounded">Register Restaurant</a>
                             <a href="{% url 'browse_food' %}" class="hover:bg-green-700 px-3 py-2 rounded">Browse Food</a>
                             <a href="{% url 'my_orders' %}" class="hover:bg-green-700 px-3 py-2 rounded">My Orders</a>
-                            <button class="hover:bg-green-700 p-2 rounded">
+                            <button hx-get="/dropdown-items" hx-target="#dropdown-menu" hx-swap="innerHTML" class="dropdown-btn hover:bg-green-700 p-2 rounded">
                                 <img src="{% static 'img/profile.jpg' %}" alt="Profile" class="w-8 h-8 rounded-full">
                             </button>
+                            <div class="dropdown-content hidden" id="dropdown-menu"></div>
                         {% endif %}
                         <form method="post" action="{% url 'logout' %}" class="inline">
                             {% csrf_token %}

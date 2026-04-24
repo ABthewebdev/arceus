@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from .models import Restaurant, Food, Order
 
@@ -97,6 +97,26 @@ def order_food(request, pk):
         return redirect('my_orders')
     
     return render(request, 'order_food.html', {'food': food})
+
+@require_http_methods(["GET"])
+def dropdown_menu(request):
+    """Return the dropdown menu items"""
+    return render(request, 'templates/dropdown_items.html')
+
+
+def orders_view(request):
+    """Handle Orders click"""
+    return render(request, 'templates/pages/orders.html')
+
+
+def rewards_view(request):
+    """Handle Rewards click"""
+    return render(request, 'templates/pages/rewards.html')
+
+
+def menu_view(request):
+    """Handle Menu click"""
+    return render(request, 'templates/pages/menu.html')
 
 
 @login_required

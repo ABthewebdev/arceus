@@ -9,6 +9,8 @@ urlpatterns = [
     path('food/', views.food_list, name='food_list'),
     path('food/add/', views.add_food, name='add_food'),
     path('food/<int:pk>/order/', views.order_food, name='order_food'),
-    path('orders/', views.my_orders, name='my_orders'),
-    path('orders/<int:pk>/update/', views.update_order_status, name='update_order_status'),
+    path('api/dropdown-menu/', views.dropdown_menu, name='dropdown_menu'),
+    path('orders/', views.orders_view, name='orders'),
+    path('rewards/', views.rewards_view, name='rewards'),
+    path('menu/', views.menu_view, name='menu'),
 ]
