@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}FoodRescue{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
     <script src="https://unpkg.com/alpinejs@3.13.3" defer></script>
 </head>
@@ -30,7 +30,7 @@
                             <button hx-get="{% url 'dropdown_menu' %}" hx-target="#dropdown-menu" hx-swap="innerHTML" class="dropdown-btn hover:bg-green-700 p-2 rounded">
                                 <img src="{% static 'img/profile.jpg' %}" alt="Profile" class="w-8 h-8 rounded-full">
                             </button>
-                            <div class="dropdown-content hidden" id="dropdown-menu"></div>
+                            <div class="dropdown-content" id="dropdown-menu"></div>
                         {% endif %}
                         <form method="post" action="{% url 'logout' %}" class="inline">
                             {% csrf_token %}
