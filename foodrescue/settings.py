@@ -63,7 +63,9 @@ MIDDLEWARE = [
 
 
 LOGIN_REDIRECT_URL = '/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 ROOT_URLCONF = 'foodrescue.urls'
 
