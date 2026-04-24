@@ -101,22 +101,22 @@ def order_food(request, pk):
 @require_http_methods(["GET"])
 def dropdown_menu(request):
     """Return the dropdown menu items"""
-    return render(request, 'templates/dropdown_items.html')
+    return render(request, 'dropdown_items.html')
 
 
 def orders_view(request):
     """Handle Orders click"""
-    return render(request, 'templates/pages/orders.html')
+    return render(request, 'pages/orders.html')
 
 
 def rewards_view(request):
     """Handle Rewards click"""
-    return render(request, 'templates/pages/rewards.html')
+    return render(request, 'pages/rewards.html')
 
 
 def menu_view(request):
     """Handle Menu click"""
-    return render(request, 'templates/pages/menu.html')
+    return render(request, 'pages/menu.html')
 
 
 @login_required
