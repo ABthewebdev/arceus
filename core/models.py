@@ -2,13 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 
-
 class Restaurant(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='restaurant')
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    city = models.CharField(max_length=20, default="chad")
-    state = models.CharField(max_length=2, default="chad")
+    city = models.CharField(max_length=20, default="Miami")
+    state = models.CharField(max_length=2, default="FL")
     zip_code = models.BigIntegerField(default=11111)
     phone = models.CharField(max_length=20)
     description = models.TextField(blank=True)
