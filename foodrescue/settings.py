@@ -22,14 +22,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = [
-    'arceus-production.up.railway.app',
-    'www.arceus-production.up.railway.app',
-    'originscent.com',
-    'www.originscent.com',
-    'localhost',
-    '127.0.0.1',
-]
 _env_hosts = os.environ.get('ALLOWED_HOSTS', '')
 if _env_hosts:
     ALLOWED_HOSTS.extend([h.strip() for h in _env_hosts.split(',') if h.strip()])
