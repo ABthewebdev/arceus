@@ -14,7 +14,7 @@
     ></script>
   </head>
   <body class="bg-gray-50">
-    <nav class="bg-green-600 text-white shadow-lg">
+    <nav class="bg-blue-600 text-white shadow-lg">
       <div class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center">
@@ -24,15 +24,15 @@
             {% if user.is_authenticated %} {% if user.restaurant %}
             <a
               href="{% url 'restaurant_dashboard' %}"
-              class="hover:bg-green-700 px-3 py-2 rounded"
+              class="hover:bg-blue-700 px-3 py-2 rounded"
               >Dashboard</a
             >
             <a
               href="{% url 'food_list' %}"
-              class="hover:bg-green-700 px-3 py-2 rounded"
+              class="hover:bg-blue-700 px-3 py-2 rounded"
               >My Food</a
             >
-            <a href="#" class="hover:bg-green-700 p-2 rounded">
+            <a href="#" class="hover:bg-blue-700 p-2 rounded">
               <img
                 src="{% static 'img/profile.jpg' %}"
                 alt="Profile"
@@ -42,18 +42,18 @@
             {% else %}
             <a
               href="{% url 'add_restaurant' %}"
-              class="hover:bg-green-700 px-3 py-2 rounded"
+              class="hover:bg-blue-700 px-3 py-2 rounded"
               >Register Restaurant</a
             >
             <a
               href="{% url 'browse_food' %}"
-              class="hover:bg-green-700 px-3 py-2 rounded"
+              class="hover:bg-blue-700 px-3 py-2 rounded"
               >Browse Food</a
             >
             <div>
               <button
                 _="on click toggle .hidden on #dropdown-menu"
-                class="dropdown-btn hover:bg-green-700 p-2 rounded"
+                class="dropdown-btn hover:bg-blue-700 p-2 rounded"
               >
                 <img
                   src="{% static 'img/profile.jpg' %}"
@@ -75,7 +75,7 @@
               {% csrf_token %}
               <button
                 type="submit"
-                class="hover:bg-green-700 px-3 py-2 rounded"
+                class="hover:bg-blue-700 px-3 py-2 rounded"
               >
                 Logout
               </button>
@@ -83,7 +83,7 @@
             {% else %}
             <a
               href="{% url 'login' %}"
-              class="hover:bg-green-700 px-3 py-2 rounded"
+              class="hover:bg-blue-700 px-3 py-2 rounded"
               >Login</a
             >
             <a
