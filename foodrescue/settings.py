@@ -142,7 +142,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CSRF_TRUSTED_ORIGINS = [
     'https://originscent.com',
     'https://www.originscent.com',
-    'https://restaurant.originscent.com',
     'https://arceus-production.up.railway.app',
     'https://www.arceus-production.up.railway.app',
 ]
