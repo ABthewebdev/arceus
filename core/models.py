@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 
+
 class Restaurant(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='restaurant')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='restaurant')
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=20, default="Miami")
@@ -16,6 +17,8 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return self.name
+
+
 
 
 class Food(models.Model):

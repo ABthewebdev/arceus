@@ -1,18 +1,69 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from .models import Restaurant, Food, Order
+from .forms import RestaurantRegistrationForm
 
 
 def home(request):
+    if getattr(request, 'subdomain', None) == 'restaurant':
+        if request.user.is_authenticated:
+            try:
+                request.user.restaurant
+                return redirect('restaurant_dashboard')
+            except Restaurant.DoesNotExist:
+                messages.error(request, 'This account is not registered as a restaurant owner.')
+                return redirect('home')
+
+        return restaurant_owner_login(request)
+
+    # Customer home view - no redirects for restaurant owners
+    return render(request, 'home.html')
+
+
+def restaurant_owner_login(request):
     if request.user.is_authenticated:
         try:
-            restaurant = request.user.restaurant
+            request.user.restaurant
             return redirect('restaurant_dashboard')
         except Restaurant.DoesNotExist:
-            pass
-    return render(request, 'home.html')
+            messages.error(request, 'This account is not registered as a restaurant owner.')
+            return redirect('home')
+
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            try:
+                user.restaurant
+                login(request, user)
+                return redirect('restaurant_dashboard')
+            except Restaurant.DoesNotExist:
+                messages.error(request, 'This account is not registered as a restaurant owner.')
+                return render(request, 'login/restaurant_login.html', {'form': form})
+    else:
+        form = AuthenticationForm(request)
+
+    return render(request, 'login/restaurant_login.html', {'form': form})
+
+def restaurant_owner_register(request):
+    if request.user.is_authenticated:
+        return redirect('restaurant_dashboard')
+
+    if request.method == 'POST':
+        form = RestaurantRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Restaurant account created successfully!')
+            return redirect('restaurant_dashboard')
+    else:
+        form = RestaurantRegistrationForm()
+
+    return render(request, 'registration/restaurant_signup.html', {'form': form})
 
 
 @login_required

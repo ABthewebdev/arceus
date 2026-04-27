@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['www.originscent.com', 'originscent.com']
+ALLOWED_HOSTS = ['.originscent.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -28,10 +28,12 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'core.middleware.SubdomainMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -140,6 +142,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CSRF_TRUSTED_ORIGINS = [
     'https://originscent.com',
     'https://www.originscent.com',
+    'https://restaurant.originscent.com',
     'https://arceus-production.up.railway.app',
     'https://www.arceus-production.up.railway.app',
 ]
@@ -149,3 +152,5 @@ if _env_origins:
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SESSION_COOKIE_DOMAIN = ".originscent.com"
