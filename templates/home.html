@@ -1,33 +1,41 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="text-center py-12">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome to FoodRescue</h1>
-    <p class="text-xl text-gray-600 mb-8">Connecting restaurants with surplus food to customers who need it</p>
-    
-    {% if not user.is_authenticated %}
-    <div class="space-x-4">
-        <a href="{% url 'register' %}" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">Get Started</a>
-        <a href="{% url 'login' %}" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300">Login</a>
-    </div>
-    {% endif %}
+  <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome to FoodRescue</h1>
+  <p class="text-xl text-gray-600 mb-8">
+    Connecting businesss with surplus food to customers who need it
+  </p>
+
+  {% if not user.is_authenticated %}
+  <div class="space-x-4">
+    <a
+      href="{% url 'register' %}"
+      class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+      >Get Started</a
+    >
+    <a
+      href="{% url 'login' %}"
+      class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300"
+      >Login</a
+    >
+  </div>
+  {% endif %}
 </div>
 
 <div class="grid md:grid-cols-3 gap-8 mt-12">
-    <div class="bg-white p-6 rounded-lg shadow text-center">
-        <div class="text-3xl mb-4">🍽️</div>
-        <h3 class="text-xl font-bold mb-2">For Restaurants</h3>
-        <p class="text-gray-600">List your surplus food and reduce waste</p>
-    </div>
-    <div class="bg-white p-6 rounded-lg shadow text-center">
-        <div class="text-3xl mb-4">💰</div>
-        <h3 class="text-xl font-bold mb-2">For Customers</h3>
-        <p class="text-gray-600">Get quality food at discounted prices</p>
-    </div>
-    <div class="bg-white p-6 rounded-lg shadow text-center">
-        <div class="text-3xl mb-4">🌍</div>
-        <h3 class="text-xl font-bold mb-2">For Community</h3>
-        <p class="text-gray-600">Fight food waste together</p>
-    </div>
+  <div class="bg-white p-6 rounded-lg shadow text-center">
+    <div class="text-3xl mb-4">🍽️</div>
+    <h3 class="text-xl font-bold mb-2">For businesss</h3>
+    <p class="text-gray-600">List your surplus food and reduce waste</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow text-center">
+    <div class="text-3xl mb-4">💰</div>
+    <h3 class="text-xl font-bold mb-2">For Customers</h3>
+    <p class="text-gray-600">Get quality food at discounted prices</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow text-center">
+    <div class="text-3xl mb-4">🌍</div>
+    <h3 class="text-xl font-bold mb-2">For Community</h3>
+    <p class="text-gray-600">Fight food waste together</p>
+  </div>
 </div>
 {% endblock %}

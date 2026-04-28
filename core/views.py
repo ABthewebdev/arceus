@@ -1,112 +1,27 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
-from .models import Restaurant, Food, Order
-from .forms import RestaurantRegistrationForm
-
+from .models import *
+from accounts.models import *
 
 def home(request):
-    if getattr(request, 'subdomain', None) == 'restaurant':
-        if request.user.is_authenticated:
-            try:
-                request.user.restaurant
-                return redirect('restaurant_dashboard')
-            except Restaurant.DoesNotExist:
-                messages.error(request, 'This account is not registered as a restaurant owner.')
-                return redirect('home')
-
-        return restaurant_owner_login(request)
-
-    # Customer home view - no redirects for restaurant owners
     return render(request, 'home.html')
 
-
-def restaurant_owner_login(request):
-    if request.user.is_authenticated:
-        try:
-            request.user.restaurant
-            return redirect('restaurant_dashboard')
-        except Restaurant.DoesNotExist:
-            messages.error(request, 'This account is not registered as a restaurant owner.')
-            return redirect('home')
-
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            try:
-                user.restaurant
-                login(request, user)
-                return redirect('restaurant_dashboard')
-            except Restaurant.DoesNotExist:
-                messages.error(request, 'This account is not registered as a restaurant owner.')
-                return render(request, 'login/restaurant_login.html', {'form': form})
-    else:
-        form = AuthenticationForm(request)
-
-    return render(request, 'login/restaurant_login.html', {'form': form})
-
-def restaurant_owner_register(request):
-    if request.user.is_authenticated:
-        return redirect('restaurant_dashboard')
-
-    if request.method == 'POST':
-        form = RestaurantRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Restaurant account created successfully!')
-            return redirect('restaurant_dashboard')
-    else:
-        form = RestaurantRegistrationForm()
-
-    return render(request, 'registration/restaurant_signup.html', {'form': form})
-
-
-@login_required
 def browse_food(request):
-    foods = Food.objects.filter(available=True, quantity__gt=0).select_related('restaurant').order_by('-created_at')
+    foods = Food.objects.filter(available=True, quantity__gt=0).select_related('business').order_by('-created_at')
     return render(request, 'browse_food.html', {'foods': foods})
 
-
-@login_required
-def restaurant_dashboard(request):
-    try:
-        restaurant = request.user.restaurant
-    except Restaurant.DoesNotExist:
-        messages.error(request, 'You need to create a restaurant profile first.')
-        return redirect('add_restaurant')
-    
-    foods = Food.objects.filter(restaurant=restaurant)
-    pending_orders = Order.objects.filter(
-        food__restaurant=restaurant,
-        status__in=['pending', 'confirmed', 'ready']
-    ).select_related('food', 'customer')
-    
-    return render(request, 'restaurant_dashboard.html', {
-        'restaurant': restaurant,
-        'foods': foods,
-        'pending_orders': pending_orders,
-    })
-
-
-@login_required
 def food_list(request):
-    restaurant = get_object_or_404(Restaurant, user=request.user)
-    foods = Food.objects.filter(restaurant=restaurant)
+    business = get_object_or_404(Business, user=request.user)
+    foods = Food.objects.filter(business=business)
     return render(request, 'food_list.html', {'foods': foods})
 
-
-@login_required
 def add_food(request):
-    restaurant = get_object_or_404(Restaurant, user=request.user)
+    business = get_object_or_404(Business, user=request.user)
     
     if request.method == 'POST':
         food = Food.objects.create(
-            restaurant=restaurant,
+            business=business,
             name=request.POST.get('name'),
             description=request.POST.get('description'),
             quantity=int(request.POST.get('quantity', 1)),
@@ -122,7 +37,21 @@ def add_food(request):
     return render(request, 'add_food.html')
 
 
-@login_required
+
+def orders(request):
+    """Handle Orders click"""
+    return render(request, 'pages/orders.html')
+
+
+def rewards(request):
+    """Handle Rewards click"""
+    return render(request, 'pages/rewards.html')
+
+
+def menu(request):
+    """Handle Menu click"""
+    return render(request, 'pages/menu.html')
+
 def order_food(request, pk):
     food = get_object_or_404(Food, pk=pk, available=True)
     
@@ -147,59 +76,3 @@ def order_food(request, pk):
         return redirect('my_orders')
     
     return render(request, 'order_food.html', {'food': food})
-
-@require_http_methods(["GET"])
-def dropdown_menu(request):
-    items = ['orders', 'rewards', 'menu']
-    return render(request, 'dropdown_items.html', {'items': items})
-
-
-def orders(request):
-    """Handle Orders click"""
-    return render(request, 'pages/orders.html')
-
-
-def rewards(request):
-    """Handle Rewards click"""
-    return render(request, 'pages/rewards.html')
-
-
-def menu(request):
-    """Handle Menu click"""
-    return render(request, 'pages/menu.html')
-
-
-@login_required
-def my_orders(request):
-    orders = Order.objects.filter(customer=request.user).select_related('food__restaurant').order_by('-created_at')
-    return render(request, 'my_orders.html', {'orders': orders})
-
-
-@login_required
-def update_order_status(request, pk):
-    order = get_object_or_404(Order, food__restaurant__user=request.user, pk=pk)
-    
-    if request.method == 'POST':
-        new_status = request.POST.get('status')
-        if new_status in dict(Order.STATUS_CHOICES):
-            order.status = new_status
-            order.save()
-            messages.success(request, f'Order #{order.id} status updated to {new_status}.')
-    
-    return redirect('restaurant_dashboard')
-
-
-@login_required
-def add_restaurant(request):
-    if request.method == 'POST':
-        restaurant = Restaurant.objects.create(
-            user=request.user,
-            name=request.POST.get('name'),
-            address=request.POST.get('address'),
-            phone=request.POST.get('phone'),
-            description=request.POST.get('description', ''),
-        )
-        messages.success(request, 'Restaurant profile created successfully!')
-        return redirect('restaurant_dashboard')
-    
-    return render(request, 'add_restaurant.html')

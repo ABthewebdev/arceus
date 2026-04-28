@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
@@ -11,6 +12,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['.originscent.com', 'localhost', '127.0.0.1']
+
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+DATE_INPUT_FORMAT = "%m/%d/%Y"
+
+TIME_FORMAT = "%H:%M"
 
 SITE_ID = 1
 
@@ -72,18 +79,14 @@ WSGI_APPLICATION = 'foodrescue.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-db_engine = os.environ.get('DB_ENGINE', 'django.db.backends.sqlite3')
 
-if db_engine == 'django.db.backends.postgresql':
+
+if DEBUG:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME', 'foodrescue'),
-            'USER': os.environ.get('DB_USER', 'postgres'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
-        }
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+        ),
     }
 else:
     DATABASES = {

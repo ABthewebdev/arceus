@@ -1,17 +1,17 @@
 from django.urls import path
-from . import views
+from .views import *
+from accounts.views import *
+
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('register/', views.restaurant_owner_register, name='restaurant_register'),
-    path('browse/', views.browse_food, name='browse_food'),
-    path('restaurant/', views.restaurant_dashboard, name='restaurant_dashboard'),
-    path('restaurant/add/', views.add_restaurant, name='add_restaurant'),
-    path('food/', views.food_list, name='food_list'),
-    path('food/add/', views.add_food, name='add_food'),
-    path('food/<int:pk>/order/', views.order_food, name='order_food'),
-    path('dropdown-menu/', views.dropdown_menu, name='dropdown_menu'),
-    path('orders/', views.orders, name='orders'),
-    path('rewards/', views.rewards, name='rewards'),
-    path('menu/', views.menu, name='menu'),
+    path('', home, name='home'),
+    path('business/register/', business_register, name='business_register'),
+    path('business/login/', business_login, name='business_login'),
+    path('business/', business_dashboard, name='business_dashboard'),
+    path('browse/', browse_food, name='browse_food'),
+    path('food/', food_list, name='food_list'),
+    path('food/add/', add_food, name='add_food'),
+    path('orders/', orders, name='orders'),
+    path('rewards/', rewards, name='rewards'),
+    path('menu/', menu, name='menu'),
 ]
