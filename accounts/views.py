@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .forms import CustomerRegisterForm, BusinessRegisterForm
-from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 
 def customer_register(request):
@@ -14,13 +13,13 @@ def customer_register(request):
     else:
         form = CustomerRegisterForm()
 
-    return render(request, "accounts/customer_register.html", {"form": form})
+    return render(request, "registration/customer_register.html", {"form": form})
 
 def customer_login(request):
     if request.method == "POST":
         user = authenticate(
             request,
-            username=request.POST["username"],
+            email=request.POST["email"],
             password=request.POST["password"],
         )
 
@@ -28,21 +27,8 @@ def customer_login(request):
             login(request, user)
             return redirect("Customer_dashboard")
 
-    return render(request, "accounts/customer_login.html")
+    return render(request, "login/customer_login.html")
 
-def business_login(request):
-    if request.method == "POST":
-        user = authenticate(
-            request,
-            username=request.POST["username"],
-            password=request.POST["password"],
-        )
-
-        if user and user.user_type == "business":
-            login(request, user)
-            return redirect("business_dashboard")
-
-    return render(request, "accounts/business_login.html")
 
 def business_register(request):
     if request.method == "POST":
@@ -53,7 +39,21 @@ def business_register(request):
     else:
         form = BusinessRegisterForm()
 
-    return render(request, "accounts/business_register.html", {"form": form})
+    return render(request, "registration/business_register.html", {"form": form})
+
+def business_login(request):
+    if request.method == "POST":
+        user = authenticate(
+            request,
+            email=request.POST["email"],
+            password=request.POST["password"],
+        )
+
+        if user and user.user_type == "business":
+            login(request, user)
+            return redirect("business_dashboard")
+
+    return render(request, "login/business_login.html")
 
 def business_dashboard(request):
-    return render(request, 'login/business_login.html')
+    return render(request, 'business_dashboard.html')

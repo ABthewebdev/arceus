@@ -8,12 +8,12 @@
   {% if not user.is_authenticated %}
   <div class="space-x-4">
     <a
-      href="{% url 'register' %}"
+      href="{% url 'customer_register' %}"
       class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
       >Get Started</a
     >
     <a
-      href="{% url 'login' %}"
+      href="{% url 'customer_login' %}"
       class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300"
       >Login</a
     >

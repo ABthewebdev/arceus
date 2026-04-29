@@ -74,14 +74,14 @@
             </form>
             {% else %}
             <a
-              href="/accounts/login"
+              href="{% url 'business_login' %}"
               class="hover:bg-blue-700 px-3 py-2 rounded"
-              >Login</a
+              >Business Login</a
             >
             <a
-              href="/accounts/register"
+              href="{% url 'customer_login' %}"
               class="bg-white text-green-600 hover:bg-gray-100 px-3 py-2 rounded"
-              >Sign Up</a
+              >Customer Login</a
             >
             {% endif %}
           </div>

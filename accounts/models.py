@@ -3,7 +3,7 @@ from django.db import models
 
 class CustomUser(AbstractUser):
     class UserType(models.TextChoices):
-        Customer = "Customer", "Customer"
+        CUSTOMER = "customer", "Customer"
         BUSINESS = "business", "Business"
 
     user_type = models.CharField(max_length=20, choices=UserType.choices)
@@ -12,6 +12,9 @@ class CustomUser(AbstractUser):
 class Customer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, blank=True)
+    
+    def __str__(self):
+        return self.first
 
 
 class Business(models.Model):

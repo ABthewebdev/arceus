@@ -7,11 +7,11 @@ class CustomerRegisterForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ["username", "email", "password"]
+        fields = ["email", "password"]
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.user_type = "Customer"
+        user.user_type = "CUSTOMER"
         user.set_password(self.cleaned_data["password"])
 
         if commit:
@@ -32,7 +32,7 @@ class BusinessRegisterForm(forms.ModelForm):
     def save(self, commit=True):
         user = CustomUser(
             email=self.cleaned_data["email"],
-            user_type="business",
+            user_type="BUSINESS",
         )
         user.set_password(self.cleaned_data["password"])
 

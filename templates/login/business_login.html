@@ -1,8 +1,7 @@
-{% extends 'base.html' %} {% block title %}business Owner Login - FoodRescue{%
-endblock %} {% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="max-w-md mx-auto">
   <div class="bg-white rounded-lg shadow-md p-8">
-    <h2 class="text-2xl font-bold text-center mb-6">business Owner Login</h2>
+    <h2 class="text-2xl font-bold text-center mb-6">Business Owner Login</h2>
 
     {% if messages %}
     <div class="space-y-2 mb-4">
@@ -15,17 +14,17 @@ endblock %} {% block content %}
     <form method="post" class="space-y-4">
       {% csrf_token %}
       <div>
-        <label for="id_username" class="block text-sm font-medium text-gray-700"
-          >Username</label
+        <label for="id_email" class="block text-sm font-medium text-gray-700"
+          >Email</label
         >
         <input
           type="text"
-          name="username"
+          name="email"
           autofocus
           required
-          id="id_username"
+          id="id_email"
           class="w-full border rounded px-3 py-2"
-          value="{{ form.username.value|default_if_none:'' }}"
+          value="{{ form.email.value|default_if_none:'' }}"
         />
       </div>
       <div>
@@ -46,7 +45,7 @@ endblock %} {% block content %}
     </form>
 
     <div class="text-sm text-center mt-4 text-gray-600">
-      <p>Use your business owner account to manage your dashboard.</p>
+      <p>Use your business account to manage your dashboard.</p>
       <p>
         Don't have an account?
         <a href="{% url 'business_register' %}" class="text-green-600"
